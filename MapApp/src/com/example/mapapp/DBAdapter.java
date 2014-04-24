@@ -30,53 +30,45 @@ public class DBAdapter {
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
 
-    public DBAdapter(Context ctx) 
-    {
+    public DBAdapter(Context ctx) {
         this.context = ctx;
         DBHelper = new DatabaseHelper(context);
     }
     
     // opens the database
-    public DBAdapter open() throws SQLException 
-    {
+    public DBAdapter open() throws SQLException {
         db = DBHelper.getWritableDatabase();
         return this;
     }
 
     //---closes the database---    
-    public void close() 
-    {
+    public void close() {
         DBHelper.close();
     }
     
     //---insert a title into the database---
-    public long insertTitle(String room, double longitude, 
-    		double latitude, String type) 
-    {
+    public long insertEntry(String room, double latitude, 
+    		double longitude, String type) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ROOM, room);
-        initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_LONGITUDE, longitude);
         initialValues.put(KEY_LATITUDE, latitude);
+        initialValues.put(KEY_LONGITUDE, longitude);
         initialValues.put(KEY_TYPE, type);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
     //---deletes a particular title---
-    public boolean deleteTitle(long rowId) 
-    {
+    public boolean deleteEntry(long rowId) {
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
 
-    //---retrieves all the titles---
-    public Cursor getAllTitles() 
-    {
+    //---retrieves all the entries---
+    public Cursor getAllEntries() {
         return db.query(DATABASE_TABLE, new String[] {
         		KEY_ROWID, 
         		KEY_ROOM,
-        		KEY_TITLE,
-                KEY_LONGITUDE,
                 KEY_LATITUDE,
+                KEY_LONGITUDE,
                 KEY_TYPE}, 
                 null, 
                 null, 
@@ -85,16 +77,14 @@ public class DBAdapter {
                 null);
     }
 
-    //---retrieves a particular title---
-    public Cursor getTitle(long rowId) throws SQLException 
-    {
+    //---retrieves a particular entry---
+    public Cursor getEntry(long rowId) throws SQLException {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {
                 		KEY_ROWID,
                 		KEY_ROOM, 
-                		KEY_TITLE,
-                		KEY_LONGITUDE,
                 		KEY_LATITUDE,
+                		KEY_LONGITUDE,
                 		KEY_TYPE
                 		}, 
                 		KEY_ROWID + "=" + rowId, 
@@ -109,24 +99,20 @@ public class DBAdapter {
         return mCursor;
     }
 
-    //---updates a title---
-    public boolean updateTitle(long rowId, String room, 
-    String title, double longitude, double latitude, String type) 
-    {
+    //---updates an entry---
+    public boolean updateEntry(long rowId, String room, 
+    String title, double latitude, double longitude, String type) {
         ContentValues args = new ContentValues();
         args.put(KEY_ROOM, room);
-        args.put(KEY_TITLE, title);
-        args.put(KEY_LONGITUDE, longitude);
         args.put(KEY_LATITUDE, latitude);
-        args.put(KEY_LATITUDE, type);
+        args.put(KEY_LONGITUDE, longitude);
+        args.put(KEY_TYPE, type);
         return db.update(DATABASE_TABLE, args, 
                          KEY_ROWID + "=" + rowId, null) > 0;
     }
     
-    private static class DatabaseHelper extends SQLiteOpenHelper 
-    {
-        DatabaseHelper(Context context) 
-        {
+    private static class DatabaseHelper extends SQLiteOpenHelper {
+        DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
@@ -134,8 +120,7 @@ public class DBAdapter {
          * Creates a new database if required database is not present.
          */
         @Override
-        public void onCreate(SQLiteDatabase db) 
-        {
+        public void onCreate(SQLiteDatabase db) {
             db.execSQL(DATABASE_CREATE);
         }
         
@@ -148,8 +133,7 @@ public class DBAdapter {
          */
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, 
-                              int newVersion) 
-        {
+                              int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion 
                   + " to "
                   + newVersion + ", which will destroy all old data");
