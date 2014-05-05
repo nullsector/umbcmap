@@ -12,19 +12,27 @@ import android.util.Log;
 public class DBAdapter {
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_ROOM = "room";
-    public static final String KEY_LATITUDE = "latitude";  // this may change.
+	public static final String KEY_BUILDING = "building";
+    public static final String KEY_LATITUDE = "latitude";  
     public static final String KEY_LONGITUDE = "longitude";
-    public static final String KEY_TYPE = "type"; // lecture hall, food place, etc.
+    public static final String KEY_TYPE1 = "type1"; 
+    public static final String KEY_TYPE2 = "type2";
+    public static final String KEY_TYPE3 = "type3";
     private static final String TAG = "DBAdapter";
     
     private static final String DATABASE_NAME = "places_on_campus";
     private static final String DATABASE_TABLE = "locations";
+    private static final String DATABASE_TABLE2 = "bookmarks";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_CREATE =
-        "create table titles (_id integer primary key autoincrement, "
-        + "room text null, latitude float not null, " 
-        + "longitude float not null, type text null);";
+    private static final String DATABASE_CREATE_T1 = 
+    	"create table "+ DATABASE_TABLE+" (_id integer primary key autoincrement, "
+        + "room text null, building text not null, latitude float not null, " 
+        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
+    private static final String DATABASE_CREATE_T2 =
+        "create table "+ DATABASE_TABLE2+" (_id integer primary key autoincrement, "
+        + "room text null, building text not null, latitude float not null, " 
+        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
 	        
     private final Context context; 
     private DatabaseHelper DBHelper;
@@ -47,29 +55,68 @@ public class DBAdapter {
     }
     
     //---insert a title into the database---
-    public long insertEntry(String room, double latitude, 
-    		double longitude, String type) {
+    public long insertEntry(String room, String building, double latitude, 
+    		double longitude, String type1, String type2, String type3) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ROOM, room);
+        initialValues.put(KEY_BUILDING, building);
         initialValues.put(KEY_LATITUDE, latitude);
         initialValues.put(KEY_LONGITUDE, longitude);
-        initialValues.put(KEY_TYPE, type);
+        initialValues.put(KEY_TYPE1, type1);
+        initialValues.put(KEY_TYPE1, type2);
+        initialValues.put(KEY_TYPE1, type3);
         return db.insert(DATABASE_TABLE, null, initialValues);
+    }
+    
+    public long insertBookmarks(String room, String building, double latitude, 
+    		double longitude, String type1, String type2, String type3) {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_ROOM, room);
+        initialValues.put(KEY_BUILDING, building);
+        initialValues.put(KEY_LATITUDE, latitude);
+        initialValues.put(KEY_LONGITUDE, longitude);
+        initialValues.put(KEY_TYPE1, type1);
+        initialValues.put(KEY_TYPE1, type2);
+        initialValues.put(KEY_TYPE1, type3);
+        return db.insert(DATABASE_TABLE2, null, initialValues);
     }
 
     //---deletes a particular title---
     public boolean deleteEntry(long rowId) {
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
+    
+    public boolean deleteBookmark(long rowId) {
+    	return db.delete(DATABASE_TABLE2, KEY_ROWID + "=" + rowId, null) > 0;
+    }
 
     //---retrieves all the entries---
-    public Cursor getAllEntries() {
+    public Cursor getAllEntries() { 
         return db.query(DATABASE_TABLE, new String[] {
         		KEY_ROWID, 
         		KEY_ROOM,
+        		KEY_BUILDING,
                 KEY_LATITUDE,
                 KEY_LONGITUDE,
-                KEY_TYPE}, 
+                KEY_TYPE1, 
+                KEY_TYPE2,
+                KEY_TYPE3}, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null);
+    }
+    public Cursor getAllBookmarks() { 
+        return db.query(DATABASE_TABLE2, new String[] {
+        		KEY_ROWID, 
+        		KEY_ROOM,
+        		KEY_BUILDING,
+                KEY_LATITUDE,
+                KEY_LONGITUDE,
+                KEY_TYPE1, 
+                KEY_TYPE2,
+                KEY_TYPE3}, 
                 null, 
                 null, 
                 null, 
@@ -82,10 +129,36 @@ public class DBAdapter {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {
                 		KEY_ROWID,
-                		KEY_ROOM, 
+                		KEY_ROOM,
+                		KEY_BUILDING,
                 		KEY_LATITUDE,
                 		KEY_LONGITUDE,
-                		KEY_TYPE
+                		KEY_TYPE1,
+                		KEY_TYPE2,
+                		KEY_TYPE3,
+                		}, 
+                		KEY_ROWID + "=" + rowId, 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    public Cursor getBookmark(long rowId) throws SQLException {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE2, new String[] {
+                		KEY_ROWID,
+                		KEY_ROOM,
+                		KEY_BUILDING,
+                		KEY_LATITUDE,
+                		KEY_LONGITUDE,
+                		KEY_TYPE1,
+                		KEY_TYPE2,
+                		KEY_TYPE3,
                 		}, 
                 		KEY_ROWID + "=" + rowId, 
                 		null,
@@ -101,13 +174,30 @@ public class DBAdapter {
 
     //---updates an entry---
     public boolean updateEntry(long rowId, String room, 
-    String title, double latitude, double longitude, String type) {
+    		String building, double latitude, double longitude, String type1, String type2, String type3) {
         ContentValues args = new ContentValues();
         args.put(KEY_ROOM, room);
+        args.put(KEY_BUILDING, building);
         args.put(KEY_LATITUDE, latitude);
         args.put(KEY_LONGITUDE, longitude);
-        args.put(KEY_TYPE, type);
+        args.put(KEY_TYPE1, type1);
+        args.put(KEY_TYPE2, type2);
+        args.put(KEY_TYPE3, type3);
         return db.update(DATABASE_TABLE, args, 
+                         KEY_ROWID + "=" + rowId, null) > 0;
+    }
+    //---updates an entry---
+    public boolean updateBookmark(long rowId, String room, 
+    		String building, double latitude, double longitude, String type1, String type2, String type3) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_ROOM, room);
+        args.put(KEY_BUILDING, building);
+        args.put(KEY_LATITUDE, latitude);
+        args.put(KEY_LONGITUDE, longitude);
+        args.put(KEY_TYPE1, type1);
+        args.put(KEY_TYPE2, type2);
+        args.put(KEY_TYPE3, type3);
+        return db.update(DATABASE_TABLE2, args, 
                          KEY_ROWID + "=" + rowId, null) > 0;
     }
     
@@ -121,7 +211,8 @@ public class DBAdapter {
          */
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE);
+            db.execSQL(DATABASE_CREATE_T1);
+            db.execSQL(DATABASE_CREATE_T2);
         }
         
         /**
