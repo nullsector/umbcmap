@@ -206,6 +206,30 @@ public class DBAdapter {
         }
         return mCursor;
     }
+    public Cursor getBookmarkByBuilding(String building) throws SQLException {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE2, new String[] {
+                		KEY_ROWID,
+                		KEY_NAME,
+                		KEY_ROOM,
+                		KEY_BUILDING,
+                		KEY_LATITUDE,
+                		KEY_LONGITUDE,
+                		KEY_TYPE1,
+                		KEY_TYPE2,
+                		KEY_TYPE3,
+                		}, 
+                		KEY_BUILDING + "='" + building+"'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
 
  // get the thing by name
     public Cursor getEntryByName(String name) throws SQLException {
@@ -232,10 +256,61 @@ public class DBAdapter {
         }
         return mCursor;
     }
+    public Cursor getBookmarkByName(String name) throws SQLException {
+        Cursor mCursor =
+                db.query(true, DATABASE_TABLE2, new String[] {
+                		KEY_ROWID,
+                		KEY_NAME,
+                		KEY_ROOM,
+                		KEY_BUILDING,
+                		KEY_LATITUDE,
+                		KEY_LONGITUDE,
+                		KEY_TYPE1,
+                		KEY_TYPE2,
+                		KEY_TYPE3,
+                		}, 
+                		KEY_NAME + "='" + name+"'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
     
  // get the thing by types
     public Cursor getEntryByType(String t1) throws SQLException {
          Cursor mCursor = db.query(true, DATABASE_TABLE, new String[] {
+                		KEY_ROWID,
+                		KEY_NAME,
+                		KEY_ROOM,
+                		KEY_BUILDING,
+                		KEY_LATITUDE,
+                		KEY_LONGITUDE,
+                		KEY_TYPE1,
+                		KEY_TYPE2,
+                		KEY_TYPE3,
+                		}, 
+                   		KEY_TYPE1 + "='" + t1+"' OR " +
+                		KEY_TYPE2 + "='" + t1+"' OR " +
+                		KEY_TYPE3 + "='" + t1+"'", 
+                		null,
+                		null, 
+                		null, 
+                		null, 
+                		null);/**/
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+ // get the thing by types
+    public Cursor getBookmarkByType(String t1) throws SQLException {
+         Cursor mCursor = db.query(true, DATABASE_TABLE2, new String[] {
                 		KEY_ROWID,
                 		KEY_NAME,
                 		KEY_ROOM,
