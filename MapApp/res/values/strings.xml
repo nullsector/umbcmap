@@ -4,6 +4,15 @@
     <string name="app_name">MapApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="button">Button</string>
 
+     
+    <string-array name="categories_array">
+        <item>Categories</item>
+        <item>Building</item>
+        <item>Activities</item>
+        <item>Lecture Hall</item>
+        <item>Food</item>
+        <item>Residence Hall</item>
+    </string-array>
+    
 </resources>
