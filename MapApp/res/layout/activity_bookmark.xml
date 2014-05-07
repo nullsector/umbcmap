@@ -1,88 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     >
+    android:layout_height="match_parent" >
 
-     <TextView
+    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
-        android:text="Bookmark components go here"
+        android:text="Enter Bookmark Data"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     <TextView
-         android:id="@+id/textView2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/textView1"
-         android:layout_marginTop="80dp"
-         android:layout_toLeftOf="@+id/textView1"
-         android:text="Latitude:"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="80dp"
+        android:layout_toLeftOf="@+id/textView1"
+        android:text="Enter Name:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     <TextView
-         android:id="@+id/textView3"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView2"
-         android:layout_below="@+id/textView2"
-         android:layout_marginTop="80dp"
-         android:text="Longitude:"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/bNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:imeActionLabel="Enter Name"
+        android:imeOptions="actionSend"
+        android:inputType="text|textNoSuggestions" >
 
-     <TextView
-         android:id="@+id/latitude"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/textView2"
-         android:layout_alignBottom="@+id/textView2"
-         android:layout_centerHorizontal="true"
-         android:text="Large Text"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+        <requestFocus />
+    </EditText>
 
-     <TextView
-         android:id="@+id/longitude"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/textView3"
-         android:layout_alignBottom="@+id/textView3"
-         android:layout_alignLeft="@+id/latitude"
-         android:text="Large Text"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="67dp"
+        android:text="Building:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     <TextView
-         android:id="@+id/textView6"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView3"
-         android:layout_below="@+id/textView3"
-         android:layout_marginTop="80dp"
-         android:text="Enter Name:"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/bBuildField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/TextView01"
+        android:layout_alignLeft="@+id/bNameField"
+        android:ems="10" 
+        android:imeActionLabel="Enter Building"
+        android:imeOptions="actionSend"
+        android:inputType="text|textNoSuggestions" />
 
-     <EditText
-         android:id="@+id/editText1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/textView6"
-         android:layout_alignLeft="@+id/longitude"
-         android:ems="10" >
+    <EditText
+        android:id="@+id/bRoomField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bBuildField"
+        android:layout_alignTop="@+id/TextView02"
+        android:ems="10" 
+        android:imeActionLabel="Enter Room"
+        android:imeOptions="actionSend"
+        android:inputType="text|textNoSuggestions" />
 
-         <requestFocus />
-     </EditText>
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextView01"
+        android:layout_below="@+id/TextView01"
+        android:layout_marginTop="56dp"
+        android:text="Room:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     <Button
-         android:id="@+id/enter"
-         android:layout_width="150dp"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/editText1"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="140dp"
-         android:text="Enter" />
-   
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextView02"
+        android:layout_below="@+id/bRoomField"
+        android:layout_marginTop="62dp"
+        android:text="Category Type 1:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/bType1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/enter"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_marginLeft="35dp" />
+
+    <Button
+        android:id="@+id/enter"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp"
+        android:text="Enter" />
+
+    <Spinner
+        android:id="@+id/bType2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bType1"
+        android:layout_alignTop="@+id/TextView03" />
+
+    <TextView
+        android:id="@+id/TextView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/bType1"
+        android:layout_marginTop="40dp"
+        android:text="Category Type 2:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/bType3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bType2"
+        android:layout_alignTop="@+id/TextView04"
+         />
+
+    <TextView
+        android:id="@+id/TextView04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextView03"
+        android:layout_below="@+id/bType2"
+        android:layout_marginTop="30dp"
+        android:text="Category Type 3:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>
-
