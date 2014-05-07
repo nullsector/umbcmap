@@ -71,6 +71,17 @@ The emulator may need to be modified to enable the physical buttons.
 	MapView bookmarkMap;
 	
 	public void onCreate(Bundle savedInstanceState){
+		// Make database
+		db = new DBAdapter(this);
+
+		// If there are no entries, input entries
+		db.open();
+
+		if(!db.isEmpty()) {
+			db.insertEntries();
+		}
+
+		db.close();
 
 		super.onCreate(savedInstanceState);
 
