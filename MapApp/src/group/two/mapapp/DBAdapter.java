@@ -28,14 +28,14 @@ public class DBAdapter {
 
     private static final String DATABASE_CREATE_T1 = 
     	"create table "+ DATABASE_TABLE+" (_id integer primary key autoincrement, "
-    	+ "name text not null, "
-        + "room text null, building text not null, latitude float not null, " 
-        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
+    	+ "name text not null collate nocase, "
+        + "room text null collate nocase, building text not null collate nocase, latitude float not null, " 
+        + "longitude float not null, type1 text null collate nocase, type2 text null collate nocase, type3 text null collate nocase);";
     private static final String DATABASE_CREATE_T2 =
         "create table "+ DATABASE_TABLE2+" (_id integer primary key autoincrement, "
-        		+ "name text not null, "
-        + "room text null, building text not null, latitude float not null, " 
-        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
+        + "name text not null collate nocase, "
+        + "room text null collate nocase, building text not null collate nocase, latitude float not null, " 
+        + "longitude float not null, type1 text null collate nocase, type2 text null collate nocase, type3 text null collate nocase);";
 	        
     private final Context context; 
     private DatabaseHelper DBHelper;
