@@ -1,3 +1,6 @@
+// Group 2 Map App
+// Names - Anthony Sasadeusz, Morgan Miller, Nicholas Tokash, Simon Guo, William Thompson
+
 package group.two.mapapp;
 
 
@@ -100,8 +103,12 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 	private MapView mapView;
 	MapView bookmarkMap;
 	
+	
+	//On App Creation
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
+        //Construction of our map view settings
         mResourceProxy = new DefaultResourceProxyImpl(getApplicationContext());
         mapView = new MapView(this, 256); //constructor
         
@@ -153,10 +160,10 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 
         mapView.getController().setCenter(new GeoPoint(39.255025, -76.711192));
 
-
+        //items list held overlays for test cases in development
         ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
         
-        
+        //adds overlays to the map
         this.mMyLocationOverlay = new ItemizedIconOverlay<OverlayItem>(items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>(){
             @Override
             public boolean onItemSingleTapUp(final int index,
@@ -214,12 +221,14 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 	    case MotionEvent.ACTION_UP:
 	    	//If we are adding a book mark
 	    	if(clickFlag){
+	    		//get user click coords and store in a geopoint
 	            Projection proj = mapView.getProjection();
 	            GeoPoint loc = (GeoPoint) proj.fromPixels((int)ev.getX(), (int)ev.getY()); 
 	            bookmarkLong = ((double)loc.getLongitudeE6())/1000000;
 	            bookmarkLat = ((double)loc.getLatitudeE6())/1000000;
 	            setContentView(R.layout.activity_bookmark);
-
+	            
+	            //Creating form for user input required for inserting an entry in a database
 	            bNameField = (EditText)findViewById(R.id.bNameField);
 	            bNameField.setOnEditorActionListener(new OnEditorActionListener() {
 	            	@Override
@@ -258,7 +267,7 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 
 	            	}
 	            });
-
+	            //Drop downs for bookmark form
 	            bType1 = (Spinner) findViewById(R.id.bType1);
 	            cat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            bType1.setAdapter(cat);
@@ -327,6 +336,7 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 		 return super.onKeyDown(keyCode, event);
 		}	
 
+	//Button listener class for all of our buttons
 	private class ButtonListener implements OnClickListener{
 
 		@Override
@@ -336,6 +346,7 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 			//We are in the bookmark function
 			if(bookmarkFlag){				
 				if(enterButton.getId() == ((Button)V).getId()){
+					ArrayList<OverlayItem> bookmarkItems = new ArrayList<OverlayItem>();
 					mapView.getOverlays().clear();							
 					nameEntry = bNameField.getText().toString();
 					       
@@ -343,15 +354,45 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 					        	
 					roomEntry = bRoomField.getText().toString();
 					
+					//open database, insert bookmark, close database
 					db.open();
 					
 					db.insertBookmarks(nameEntry, buildEntry, roomEntry, bookmarkLat+.0018, bookmarkLong, t1Selection, t2Selection, t3Selection);
 					
-					db.close();	
+					db.close();						
+					
+					//Show the users bookmark on the map
+					bookMarkText.setText("Press the menu button for more options");
+					bookmarkItems.add(new OverlayItem(nameEntry, "Sample Description", new GeoPoint(bookmarkLat+.0018, bookmarkLong)));
+					
+					mMyLocationOverlay = new ItemizedIconOverlay<OverlayItem>(bookmarkItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>(){
+			            @Override
+			            public boolean onItemSingleTapUp(final int index,
+			                    final OverlayItem item) {
+			                Toast.makeText(
+			                        MapApp.this,
+			                        "Item '" + item.getTitle(), Toast.LENGTH_LONG).show();
+			                return true; // We 'handled' this event.
+			            }
+			            @Override
+			            public boolean onItemLongPress(final int index,
+			                    final OverlayItem item) {
+			                Toast.makeText(
+			                        MapApp.this, 
+			                        "Item '" + item.getTitle() ,Toast.LENGTH_LONG).show();
+			                return false;
+			            }
+			        	}, mResourceProxy);
+			        mapView.getOverlays().add(mMyLocationOverlay);
 
-					bNameField.setText("");
-					bBuildField.setText("");
-					bRoomField.setText("");
+			        setContentView(relativeLayout); //displaying the MapView
+
+			        mapView.getController().setZoom(16); //set initial zoom-level, depends on your need
+
+			        mapView.getController().setCenter(new GeoPoint(39.255025, -76.711192));
+					mapView.setUseDataConnection(true); //keeps the mapView from loading online tiles using network connection.
+
+					
 				}
 				bookmarkFlag = false;
 			}
@@ -410,12 +451,15 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 					mapView.getOverlays().clear();				
 					db.open();
 					
+					
 					ArrayList<OverlayItem> searchItems = new ArrayList<OverlayItem>();
 					String search = searchText.getText().toString();
 					String info = "";
 					GeoPoint searchResult = null;				
 					Cursor c;
 					
+					//Decide what the user is searching by
+					//If its a building, search by building
 					if(Arrays.asList(buildings).contains(search.toLowerCase())){
 						c = db.getEntryByBuilding(search);
 						try{
@@ -443,7 +487,9 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 						}catch(Exception e){
 							
 						}
-					}else{
+					}
+					//else it's a name they are searching by
+					else{
 						c = db.getEntryByName(search);
 						try{
 						if(c.moveToFirst()){
@@ -475,7 +521,8 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 			        searchItems.add(new OverlayItem(info, "SampleDescription", searchResult));
 			        
 			        db.close();
-			        
+
+			        //if there were search results, display them on the map 
 			        if(hasResults){
 			        	mMyLocationOverlay = new ItemizedIconOverlay<OverlayItem>(searchItems, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>(){
 			        		@Override
@@ -546,6 +593,7 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 					
 							
 				}
+				//Bookmark button was clicked, send to map with onclick turned on
 				else if(bookmarkButton.getId() == ((Button)V).getId()){
 					mapView.getOverlays().clear();
 					bookmarkFlag = true;
@@ -562,7 +610,9 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 					clickFlag = true;
 
 
-				}else if(mapButton.getId() == ((Button)V).getId()){
+				}
+				//Map Button was clicked, display map
+				else if(mapButton.getId() == ((Button)V).getId()){
 					mapView.getOverlays().clear();
 					searchFlag = false;
 					bookmarkFlag = false;
@@ -582,7 +632,7 @@ public class MapApp extends Activity implements LocationListener, MapViewConstan
 
 	}
 
-
+	//SpinnerActivity is the class used for drop down menus used in the app
 	public class SpinnerActivity extends Activity implements OnItemSelectedListener{
 
 		@Override
