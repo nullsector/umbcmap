@@ -1,4 +1,4 @@
-package group.two.mapapp;
+package com.example.mapapp;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,14 +28,14 @@ public class DBAdapter {
 
     private static final String DATABASE_CREATE_T1 = 
     	"create table "+ DATABASE_TABLE+" (_id integer primary key autoincrement, "
-    	+ "name text not null collate nocase, "
-        + "room text null collate nocase, building text not null collate nocase, latitude float not null, " 
-        + "longitude float not null, type1 text null collate nocase, type2 text null collate nocase, type3 text null collate nocase);";
+    	+ "name text not null, "
+        + "room text null, building text not null, latitude float not null, " 
+        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
     private static final String DATABASE_CREATE_T2 =
         "create table "+ DATABASE_TABLE2+" (_id integer primary key autoincrement, "
-        + "name text not null collate nocase, "
-        + "room text null collate nocase, building text not null collate nocase, latitude float not null, " 
-        + "longitude float not null, type1 text null collate nocase, type2 text null collate nocase, type3 text null collate nocase);";
+        		+ "name text not null, "
+        + "room text null, building text not null, latitude float not null, " 
+        + "longitude float not null, type1 text null, type2 text null, type3 text null);";
 	        
     private final Context context; 
     private DatabaseHelper DBHelper;
@@ -195,7 +195,7 @@ public class DBAdapter {
                 		KEY_TYPE2,
                 		KEY_TYPE3,
                 		}, 
-                		KEY_BUILDING + "='" + building+"'", 
+                		KEY_BUILDING + " LIKE '%" + building+"%' COLLATE NOCASE", 
                 		null,
                 		null, 
                 		null, 
@@ -219,7 +219,7 @@ public class DBAdapter {
                 		KEY_TYPE2,
                 		KEY_TYPE3,
                 		}, 
-                		KEY_BUILDING + "='" + building+"'", 
+                		KEY_BUILDING + " LIKE '%" + building + "%' COLLATE NOCASE", 
                 		null,
                 		null, 
                 		null, 
@@ -245,7 +245,7 @@ public class DBAdapter {
                 		KEY_TYPE2,
                 		KEY_TYPE3,
                 		}, 
-                		KEY_NAME + "='" + name+"'", 
+                		KEY_NAME + " LIKE '%" + name + "%' COLLATE NOCASE", 
                 		null,
                 		null, 
                 		null, 
@@ -269,7 +269,7 @@ public class DBAdapter {
                 		KEY_TYPE2,
                 		KEY_TYPE3,
                 		}, 
-                		KEY_NAME + "='" + name+"'", 
+                		KEY_NAME + " LIKE '%" + name + "%' COLLATE NOCASE", 
                 		null,
                 		null, 
                 		null, 
