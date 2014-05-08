@@ -1,4 +1,4 @@
-package com.example.mapapp;
+package group.two.mapapp;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -453,7 +453,7 @@ public class DBAdapter {
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (16, 'Off-Campus Student Services', 309, 'Commons', 39.254887, -76.710918, null, null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (17, 'The Office of Student Life', 336, 'Commons', 39.254887, -76.710918, null, null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (18, 'The Mosaic Center', '2B23', 'Commons', 39.254887, -76.710918, null, null, null);");
-		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (19, 'Women’s Center', 004, 'Commons', 39.254887, -76.710918, null, null, null);");
+		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (19, 'Womenï¿½s Center', 004, 'Commons', 39.254887, -76.710918, null, null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (20, 'Bookstore ', null, 'Commons', 39.254887, -76.710918, null, null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (21, 'Student Events Board (SEB)', '2B10', 'Commons', 39.254887, -76.710918, null, null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (22, 'Game room', null, 'Commons', 39.254887, -76.710918, 'activities', null, null);");
@@ -551,7 +551,7 @@ public class DBAdapter {
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (114, 'Outtakes Convenience Store', null, 'Dining Hall', 39.255899, -76.707712, 'food', null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (115, 'Outtakes Quick Cuisine', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (116, 'Yum Shoppe ', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
-		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (117, 'Salsarita’s', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
+		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (117, 'Salsaritaï¿½s', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (118, 'Famous Famiglia', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (119, 'Wild Greens', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
 		db.execSQL("INSERT INTO [locations] ([_id], [name], [room], [building], [latitude], [longitude], [type1], [type2], [type3]) VALUES (120, 'Au Bon Pain', null, 'Commons', 39.254887, -76.710918, 'food', null, null);");
